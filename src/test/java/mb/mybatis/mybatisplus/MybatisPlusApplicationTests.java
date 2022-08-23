@@ -92,6 +92,9 @@ public class MybatisPlusApplicationTests {
     }
 
 
+    /**
+     * 分页
+     */
     @Test
     public void testSelectPage() {
         Page<User> page = new Page<>(1,5);
@@ -215,12 +218,13 @@ public class MybatisPlusApplicationTests {
     /**
      * last
      * 直接拼接到 sql 的最后
+     * 注意：使用last有sql 注入的风险
      */
     @Test
     public void testSelectListLast() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.last("limit 1");
-        //queryWrapper.last(" or 1=1");
+        //有sql注入的风险：queryWrapper.last(" or 1=1");
         List<User> users = userMapper.selectList(queryWrapper);
         users.forEach(System.out::println);
     }
